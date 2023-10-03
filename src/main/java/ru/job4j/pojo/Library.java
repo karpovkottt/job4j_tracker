@@ -19,7 +19,7 @@ public class Library {
         }
         System.out.println("Display only \"Clean Code\" book.");
         for (Book bk : books) {
-            if (bk.getName().equals("Clean Code")) {
+            if ("Clean Code".equals(bk.getName())) {
                 System.out.println("Книга: " + bk.getName() + ", кол-во страниц: " + bk.getPages());
             }
         }
