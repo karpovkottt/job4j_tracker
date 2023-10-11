@@ -55,6 +55,18 @@ public class StartUI {
                 } else {
                     System.out.println("Ошибка. Заявки с id: " + id + " не существует");
                 }
+            } else if (select == 5) {
+                System.out.println("=== Вывод заявки по имени ===");
+                System.out.print("Введите имя: ");
+                String name = scanner.nextLine();
+                Item[] items = tracker.findByName(name);
+                if (items.length > 0) {
+                    for (Item item : items) {
+                        System.out.println(item);
+                    }
+                } else {
+                    System.out.println("Заявки с именем " + name + " не существует");
+                }
             } else if (select == 6) {
                 run = false;
             }
