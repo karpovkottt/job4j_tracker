@@ -17,7 +17,7 @@ public class HierarchyUsage {
 
         Object bicycle = new Bicycle();
         /* неверное приведение типов */
-        // Automobile cb = (Automobile) bicycle;
+        /* Automobile cb = (Automobile) bicycle; */
 
         System.out.println(new Automobile());
         System.out.println(new Bicycle());
