@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StartUITest {
@@ -70,6 +71,115 @@ class StartUITest {
                 + System.lineSeparator()
                 + "=== Завершение программы ==="
                 + System.lineSeparator()
+        );
+    }
+
+    @Test
+    void whenReplaceItemTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        String replacedName = "New test name";
+        Input in = new StubInput(
+            new String[] {"0", String.valueOf(one.getId()), replacedName, "1"}
+        );
+        UserAction[] actions = new UserAction[] {
+                new ReplaceAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString()).isEqualTo(
+                "Меню:" + ln
+                + "0. Изменить заявку" + ln
+                + "1. Завершить программу" + ln
+                + "=== Редактирование заявки ===" + ln
+                + "Заявка успешно изменена" + ln
+                + "Меню:" + ln
+                + "0. Изменить заявку" + ln
+                + "1. Завершить программу" + ln
+                + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindAllTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Input in = new StubInput(
+                new String[] {"0", "1"}
+        );
+        UserAction[] actions = new UserAction[] {
+                new FindAllAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString()).isEqualTo(
+                "Меню:" + ln
+                + "0. Показать все заявки" + ln
+                + "1. Завершить программу" + ln
+                + "=== Вывод всех заявок ===" + ln
+                + one + ln
+                + "Меню:" + ln
+                + "0. Показать все заявки" + ln
+                + "1. Завершить программу" + ln
+                + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByNameTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Input in = new StubInput(
+                new String[] {"0", one.getName(), "1"}
+        );
+        UserAction[] actions = new UserAction[] {
+                new FindByNameAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString()).isEqualTo(
+                "Меню:" + ln
+                        + "0. Показать заявки по имени" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Вывод заявки по имени ===" + ln
+                        + one + ln
+                        + "Меню:" + ln
+                        + "0. Показать заявки по имени" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
+        );
+    }
+
+    @Test
+    void whenFindByIdTestOutputIsSuccessfully() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item one = tracker.add(new Item("test1"));
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(one.getId()), "1"}
+        );
+        UserAction[] actions = new UserAction[] {
+                new FindByIdAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString()).isEqualTo(
+                "Меню:" + ln
+                        + "0. Показать заявку по id" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Вывод заявки по id ===" + ln
+                        + one + ln
+                        + "Меню:" + ln
+                        + "0. Показать заявку по id" + ln
+                        + "1. Завершить программу" + ln
+                        + "=== Завершение программы ===" + ln
         );
     }
 }
