@@ -12,10 +12,10 @@ class FindElTest {
         ElementNotFoundException exception = assertThrows(
                 ElementNotFoundException.class,
                 () -> {
-                    FindEl.indexOf(new String[] {"1", "2", "3"}, null);
+                    FindEl.indexOf(new String[] {"1", "2", "3"}, "4");
                 }
         );
-        assertThat(exception.getMessage()).isEqualTo("Element could not be null");
+        assertThat(exception.getMessage()).isEqualTo("Element not found");
     }
 
     @Test
@@ -23,15 +23,6 @@ class FindElTest {
         String[] value = new String[] {"A", "B", "C"};
         String key = "B";
         int expected = 1;
-        int result = FindEl.indexOf(value, key);
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    public void whenStrArrValABCKeyDThenMinus1() throws ElementNotFoundException {
-        String[] value = new String[] {"A", "B", "C"};
-        String key = "D";
-        int expected = -1;
         int result = FindEl.indexOf(value, key);
         assertThat(result).isEqualTo(expected);
     }
