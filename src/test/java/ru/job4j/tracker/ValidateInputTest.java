@@ -41,10 +41,12 @@ class ValidateInputTest {
                 }
         );
         ValidateInput input = new ValidateInput(out, in);
-        for (int i = 1; i <= 3; i++) {
-            int selected = input.askInt("Enter menu:");
-            assertThat(selected).isEqualTo(i);
-        }
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(1);
+        selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(2);
+        selected = input.askInt("Enter menu:");
+        assertThat(selected).isEqualTo(3);
     }
 
     @Test
