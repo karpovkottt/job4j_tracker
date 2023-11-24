@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Departments {
     public static List<String> fillGaps(List<String> deps) {
-        //List<String> rsl = new ArrayList<>();
         Set<String> tmp = new LinkedHashSet<>();
         for (String value : deps) {
             String start = "";
@@ -20,7 +19,6 @@ public class Departments {
                 }
             }
         }
-        //return rsl;
         return new ArrayList<>(tmp);
     }
 
