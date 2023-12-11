@@ -17,7 +17,7 @@ public class Profiles {
     public static List<Address> collectSortWithoutDuplicate(List<Profile> profiles) {
         return profiles.stream()
                 .flatMap(Stream::ofNullable)
-                .sorted(new SortAddressByCity())
+                .sorted(Comparator.comparing(profile -> profile.getAddress().getCity()))
                 .map(Profile::getAddress)
                 .distinct()
                 .collect(Collectors.toList());
