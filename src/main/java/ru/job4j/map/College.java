@@ -1,6 +1,7 @@
 package ru.job4j.map;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class College {
@@ -10,24 +11,22 @@ public class College {
         this.students = students;
     }
 
-    public Student findByAccount(String account) {
+    public Optional<Student> findByAccount(String account) {
         return students.keySet()
                 .stream()
                 .filter(e -> e.account().equals(account))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
-    public Subject findBySubjectName(String accountNumber, String name) {
+    public Optional<Subject> findBySubjectName(String accountNumber, String name) {
         var account = findByAccount(accountNumber);
-        if (account == null) {
-            return null;
+        if (account.isPresent()) {
+            return students.get(account.get())
+                    .stream()
+                    .filter(e -> e.name().equals(name))
+                    .findFirst();
         }
-        return students.get(account)
-                .stream()
-                .filter(e -> e.name().equals(name))
-                .findFirst()
-                .orElse(null);
+        return Optional.empty();
     }
 
     public static void main(String[] args) {
@@ -38,9 +37,17 @@ public class College {
                 )
         );
         College college = new College(students);
-        Student student = college.findByAccount("000001");
-        System.out.println("Найденный студент: " + student);
-        Subject english = college.findBySubjectName("000001", "English");
-        System.out.println("Оценка по найденному предмету: " + english.score());
+        Optional<Student> optional = college.findByAccount("000001");
+        if (optional.isPresent()) {
+            System.out.println("Найденный студент: " + optional.get());
+        } else {
+            System.out.println("Студент не найден");
+        }
+        Optional<Subject> english = college.findBySubjectName("000001", "English");
+        if (english.isPresent()) {
+            System.out.println("Оценка по найденному предмету: " + english.get().score());
+        } else {
+            System.out.println("Not found");
+        }
     }
 }
